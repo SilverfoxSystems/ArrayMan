@@ -9,7 +9,7 @@ ArrayMan.dll can only be called from 64 bit processes.
 
 If you will try to call it from a language other than VB.NET, the procedure expects 3 arguments: 
   1. <in> Pointer to the beginning of array of 64-bit integers to sort
-  2. <out> Pointer to the beginning of array of 32-bit integers which will hold indices to the array in first argument. Its size must be at        least the number given in 3rd argument
+  2. <out> Pointer to the beginning of array of 32-bit integers which will hold indices of the array in first argument. Its size must be at        least the number given in 3rd argument
   3. Number of items to examine in array 
   
   Procedures to call: **SortLng** for signed and 
