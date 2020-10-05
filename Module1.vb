@@ -7,7 +7,8 @@ Module Module1
 
     <DllImport("Arrayman.dll", EntryPoint:="SortLng")>
     Sub sort(ByRef Array1stItem As Long, ByRef Indices1stItem As Integer, ByVal nItemsToSort As Long)
-    'Note: For sorting ULong integers, replace EntryPoint:="SortLng" with EntryPoint:="SortULng"
+        '  Note: For sorting ULong integers, replace EntryPoint:="SortLng" with EntryPoint:="SortULng"
+        '        For sorting Double or Date arrays, use EntryPoint:="SortDbl"
     End Sub
 
     Sub Main()
@@ -19,9 +20,9 @@ Module Module1
         Dim u% = 1000
         Dim a(,,), aa(u) As Long
         'array "aa" is used for testing the default sorting procedure
-
         ReDim a(3, 2, u)
         Dim indx%(u)
+
 
         Dim t1, t2, t3, t4 As Double 'timers
 
