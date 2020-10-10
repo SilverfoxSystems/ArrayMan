@@ -26,16 +26,14 @@ Module Module1
     
     Dim u% = 10000
 
-        Dim aD(,,) As Double
-        Dim aL&(,,)
+        Dim aD(3, 2, u) As Double 'Array of Doubles to sort
+        Dim aL&(3, 2, u) 'Array of Longs to sort
+        Dim indx%(u) 'Array which will hold the result
+
+    'arrays "aaL" and "aaD" are used for testing the default sorting procedure
         Dim aaL&(u)
         Dim aaD#(u)
         Dim k%(u)
-        'arrays "aaL" and "aaD" are used for testing the default sorting procedure
-        ReDim aD(3, 2, u)
-        ReDim aL(3, 2, u)
-        Dim indx%(u)
-
         Dim t1, t2, t3, t4 As Double 'timers
 
         Randomize()
