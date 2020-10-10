@@ -5,75 +5,92 @@ Imports System.Runtime.InteropServices
 
 Module Module1
 
-    <DllImport("Arrayman.dll", EntryPoint:="SortLng")>
-    Sub sort(ByRef Array1stItem As Long, ByRef Indices1stItem As Integer, ByVal nItemsToSort As Long)
-        '  Note: For sorting ULong integers, replace EntryPoint:="SortLng" with EntryPoint:="SortULng"
-        '        For sorting Double or Date arrays, use EntryPoint:="SortDbl"
+  <DllImport("Arrayman.dll", EntryPoint:="SortLng")>
+    Sub sortLong(ByRef Array1stItem As Long, ByRef Indices1stItem As Integer, ByVal nItemsToSort As Long)
+    End Sub
+    
+<DllImport("Arrayman.dll", EntryPoint:="SortULng")>
+    Sub sortULong(ByRef Array1stItem As Long, ByRef Indices1stItem As Integer, ByVal nItemsToSort As Long)
     End Sub
 
-    Sub Main()
-        sortLngExample()
+<DllImport("Arrayman.dll", EntryPoint:="SortDbl")>
+    Sub sortDouble(ByRef Array1stItem As Double, ByRef Indices1stItem As Integer, ByVal nItemsToSort As Long)
+    End Sub
+    
+    
+        Sub Main()
+        sortExample()
     End Sub
 
-    Private Sub sortLngExample()
+    Private Sub sortExample()
+    Dim u% = 10000
 
-        Dim u% = 1000
-        Dim a(,,), aa(u) As Long
-        'array "aa" is used for testing the default sorting procedure
-        ReDim a(3, 2, u)
+        Dim aD(,,) As Double
+        Dim aL&(,,)
+        Dim aaL&(u)
+        Dim aaD#(u)
+        Dim k%(u)
+        'arrays "aaL" and "aaD" are used for testing the default sorting procedure
+        ReDim aD(3, 2, u)
+        ReDim aL(3, 2, u)
         Dim indx%(u)
 
+        ' Dim gc1 As GCHandle = GCHandle.Alloc(aL, GCHandleType.Pinned)
+        ' Dim gc3 As GCHandle = GCHandle.Alloc(aD(1, 1, 0), GCHandleType.Pinned)
+        'Dim gc2 As GCHandle = GCHandle.Alloc(indx(0), GCHandleType.Pinned)
 
         Dim t1, t2, t3, t4 As Double 'timers
 
-        
-        
         Randomize()
-        Dim i% = 0 'Fill up the arrays with random numbers
-        For i% = 0 To u 
-            a(1, 1, i) = Rnd() * 43214321  'We'll sort numbers contained in a(1, 1, {0 to u})
-            aa(i) = a(1, 1, i)
+        Dim i%, i2%
+        
+j1:
+
+        'Fill up the arrays with random numbers
+        For i% = 0 To u
+            aL(1, 1, i) = 2000 - Rnd() * 4321 'We'll sort numbers contained in aD(1, 1, {0 to u})
+            aD(1, 1, i) = aL(1, 1, i)
+            aaL(i) = aL(1, 1, i)
+            aaD(i) = aD(1, 1, i)
         Next
-
         t1# = DateAndTime.Timer
-        SortLng(a(1, 1, 0), indx) ' do the sorting
+    
+        sortDouble(aD(1, 1, 0), indx(0), indx.Count) ' do the sorting
+        'sortLong(aL(1, 1, 0), indx(0), indx.Count)
+        
         t2# = DateAndTime.Timer
-        ' here, a(1,1, indx(0)) holds the lowest number
-        ' and a(1,1, indx(u)) contains the highest one
-
-        Dim k%(u)
+    ' here, aD(1,1, indx(0)) holds the lowest number
+    ' and aD(1,1, indx(u)) contains the highest one
+        
+        ' test the time taken for the default procedure
         For i = 0 To u
             k(i) = i
         Next
-        ' test the time taken for the default procedure
         t3# = DateAndTime.Timer
-        Array.Sort(aa, k)
+        Array.Sort(aaD, k)
         t4# = DateAndTime.Timer
 
-        ' display the times
-        For i = 0 To u
-            If k(i) <> indx(i) Then
-                Console.WriteLine("Results do NOT match") 'This never happens. It serves only as proof of concept
-                Exit For
-            ElseIf i = u Then
-                'Results match
-                Console.WriteLine("")
-                Console.WriteLine("ArrayMan.dll 'SortLng' completion time: " & t2 - t1 & " sec")
-                Console.WriteLine("    Default Array.Sort completion time: " & t4 - t3 & " sec")
-                Console.WriteLine("")
-                Console.WriteLine("Sorted " & u + 1 & " Long integers (64bit).")
+    'Confirm the result
+        Dim lowest& = aL(1, 1, indx(0))
+        Dim i2% = 0
+        For i2% = 0 To u
+            If lowest > aL(1, 1, indx(i2)) Then
+                MsgBox("Array was sorted incorrectly.")
+                End
+            Else
+                lowest = aL(1, 1, indx(i2))
             End If
-        Next
-
-        Console.ReadKey() 'wait for key press
-
-
+         Next
+        
+        If ii < 5 Then
+            Console.WriteLine("")
+            Console.WriteLine("ArrayMan.dll 'SortLng' completion time: " & t2 - t1 & " sec")
+            Console.WriteLine("    Default Array.Sort completion time: " & t4 - t3 & " sec")
+            Console.WriteLine("Press any key")
+            Console.ReadKey() 'wait for key press
+            ii += 1
+            GoTo j1 'Loop for 5 times
+        End If
     End Sub
-
-    Private Sub SortLng(ByRef array1stItem As Long, ByRef indices() As Integer)
-        'A wrapper procedure for easier usage
-        sort(array1stItem, indices(0), indices.Count)
-    End Sub
-
 
 End Module
