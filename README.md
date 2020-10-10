@@ -3,7 +3,7 @@ This library lets you sort the last dimension of one- or multi-dimensional array
 
   **Long** and **ULong** integers (signed and unsigned 8-byte integers),
   
-  **Double** (8-byte floating point) and 
+  **Double** (8-byte floating point)
     
 The example in _Module1.vb_ demonstrates the usage of library "ArrayMan.dll", which is the only file you need to sort arrays in your projects. In the example, you can also compare the time spent for sorting with ArrayMan and the time spent with the default VB sorting algorithm.
 
