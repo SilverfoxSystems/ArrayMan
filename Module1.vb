@@ -18,11 +18,12 @@ Module Module1
     End Sub
     
     
-        Sub Main()
+    Sub Main()
         sortExample()
     End Sub
 
     Private Sub sortExample()
+    
     Dim u% = 10000
 
         Dim aD(,,) As Double
@@ -34,10 +35,6 @@ Module Module1
         ReDim aD(3, 2, u)
         ReDim aL(3, 2, u)
         Dim indx%(u)
-
-        ' Dim gc1 As GCHandle = GCHandle.Alloc(aL, GCHandleType.Pinned)
-        ' Dim gc3 As GCHandle = GCHandle.Alloc(aD(1, 1, 0), GCHandleType.Pinned)
-        'Dim gc2 As GCHandle = GCHandle.Alloc(indx(0), GCHandleType.Pinned)
 
         Dim t1, t2, t3, t4 As Double 'timers
 
